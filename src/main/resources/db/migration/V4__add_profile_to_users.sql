@@ -1,0 +1,1 @@
+ALTER TABLE users ADD profile VARCHAR2(255);

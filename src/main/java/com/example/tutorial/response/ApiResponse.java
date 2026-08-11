@@ -1,49 +1,92 @@
 package com.example.tutorial.response;
 
-public class ApiResponse <T>{
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
+
+@Getter
+@Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ApiResponse<T> {
+
     private boolean error;
     private String status;
     private String message;
     private T data;
+    private Pagination pagination;
 
-    public ApiResponse(boolean error, String status, String message, T data) {
+    public ApiResponse(
+            boolean error,
+            String status,
+            String message,
+            T data
+    ) {
         this.error = error;
         this.status = status;
         this.message = message;
         this.data = data;
     }
 
-    public boolean isError() {
-        return error;
+    public static <T> ApiResponse<T> success(T data) {
+        return success(false, "OK", "Success", data);
     }
 
-    public void setError(boolean error) {
-        this.error = error;
+    public static <T> ApiResponse<T> success(
+            boolean error,
+            String status,
+            String message,
+            T data
+    ) {
+        return new ApiResponse<>(
+                error,
+                status,
+                message,
+                data
+        );
     }
 
-    public String getStatus() {
-        return status;
+    public static <T> ApiResponse<T> error(T data) {
+        return new ApiResponse<>(
+                true,
+                "Error",
+                "Error",
+                data
+        );
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public static <T> ApiResponse<T> error(
+            String status,
+            String message
+    ) {
+        return new ApiResponse<>(
+                true,
+                status,
+                message,
+                null
+        );
     }
 
-    public String getMessage() {
-        return message;
-    }
+    public static <T> ApiResponse<List<T>> paginate(
+            Page<T> page,
+            int pageNo
+    ) {
+        ApiResponse<List<T>> response = new ApiResponse<>(
+                false,
+                "OK",
+                "Success",
+                page.getContent()
+        );
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+        response.pagination = new Pagination(
+                page.getSize(),
+                page.getTotalElements(),
+                page.getTotalPages(),
+                pageNo
+        );
 
-    /*T means the data can contain different types.*/
-    public T getData() {
-        return data;
+        return response;
     }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
 }
