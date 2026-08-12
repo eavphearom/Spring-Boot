@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 /*JpaRepository is already have method such as findAll,findById,save,delete,...*/
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends BaseRepository<User, Long> {
     Page<User> findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(
             String name,
             String email,

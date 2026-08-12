@@ -1,5 +1,6 @@
 package com.example.tutorial.security;
 
+import com.example.tutorial.domain.AuthUser;
 import com.example.tutorial.entity.User;
 import com.example.tutorial.exception.ResourceNotFoundException;
 import com.example.tutorial.repository.UserRepository;
@@ -51,9 +52,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //            log.debug("ROLE: " + user.getRole().getName());
 //            log.debug("TOKEN VALID: " + jwtService.isTokenValid(token, user));
 //            log.debug("===============================");
+            AuthUser authUser = new AuthUser(
+                    user.getId(),
+                    user.getName(),
+                    user.getEmail(),
+                    user.getRole() != null ? user.getRole().getId() : null
+            );
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
-                            user.getEmail(),
+                            authUser,
                             null,
                             List.of(
                                     new SimpleGrantedAuthority(

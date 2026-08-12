@@ -1,6 +1,7 @@
 package com.example.tutorial.service.impl;
 
 import com.example.tutorial.common.filter.BaseFilter;
+import com.example.tutorial.domain.AuthUser;
 import com.example.tutorial.dto.Request.UserRequest;
 import com.example.tutorial.dto.Response.UserResponse;
 import com.example.tutorial.entity.Role;
@@ -160,16 +161,17 @@ public class UserServiceImpl implements UserService {
         // Update profile only when a new image is provided
         if (request.getProfile() != null &&
                 !request.getProfile().isEmpty()) {
-            // Upload new image first
+
             String newProfile = mediaService.uploadImage(
                     request.getProfile(),
                     ImageDirectory.PROFILE
             );
-            // Delete old image
-            if (existingUser.getProfile() != null) {
+
+            if (existingUser.getProfile() != null &&
+                    !existingUser.getProfile().isBlank()) {
                 mediaService.deleteImage(existingUser.getProfile());
             }
-            // Save new image path
+
             existingUser.setProfile(newProfile);
         }
         User user = userRepository.save(existingUser);
@@ -178,8 +180,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
-        userRepository.delete(user);
+        userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
+        userRepository.softDeleteById(id);
     }
 
     private UserResponse mapToResponse(User user) {

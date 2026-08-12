@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity /*tells JPA: this Java class represents a database table*/
 @Table(name = "users")
-public class User {
+public class User extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")/*tells JPA the ID should be generated automatically.*/
     @SequenceGenerator(
