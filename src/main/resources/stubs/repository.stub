@@ -1,0 +1,7 @@
+package {{package}}.repository;
+
+import {{package}}.entity.{{name}};
+
+public interface {{name}}Repository
+        extends BaseRepository<{{name}}, Long> {
+}

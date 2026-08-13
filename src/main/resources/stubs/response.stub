@@ -1,0 +1,15 @@
+package {{package}}.dto.Response;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+public class {{name}}Response {
+
+    private Long id;
+
+    // Add response fields here
+}

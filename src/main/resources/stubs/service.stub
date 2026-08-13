@@ -1,0 +1,24 @@
+package {{package}}.service;
+
+import {{package}}.dto.Request.{{name}}Request;
+import {{package}}.dto.Response.{{name}}Response;
+import {{package}}.common.filter.BaseFilter;
+import org.springframework.data.domain.Page;
+
+public interface {{name}}Service {
+
+    {{name}}Response create{{name}}({{name}}Request request);
+
+    {{name}}Response update{{name}}ById(
+            Long id,
+            {{name}}Request request
+    );
+
+    boolean delete{{name}}ById(Long id, String reason);
+
+    {{name}}Response get{{name}}ById(Long id);
+
+    Page<{{name}}Response> get{{name}}Pagination(
+            BaseFilter filter
+    );
+}

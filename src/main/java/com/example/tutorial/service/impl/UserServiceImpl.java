@@ -179,9 +179,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public boolean deleteUser(Long id) {
         userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
-        userRepository.softDeleteById(id);
+        return userRepository.softDeleteById(id);
     }
 
     private UserResponse mapToResponse(User user) {

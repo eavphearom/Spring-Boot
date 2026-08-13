@@ -1,0 +1,98 @@
+package {{package}}.service.impl;
+
+import {{package}}.dto.Request.{{name}}Request;
+import {{package}}.dto.Response.{{name}}Response;
+import {{package}}.entity.{{name}};
+import {{package}}.exception.ResourceNotFoundException;
+import {{package}}.common.filter.BaseFilter;
+import {{package}}.repository.{{name}}Repository;
+import {{package}}.service.{{name}}Service;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class {{name}}ServiceImpl implements {{name}}Service {
+
+    private final {{name}}Repository {{nameLower}}Repository;
+
+
+    @Override
+    public {{name}}Response create{{name}}(
+            {{name}}Request request
+    ) {
+        // TODO: map request to entity
+
+        {{name}} entity = new {{name}}();
+
+        entity = {{nameLower}}Repository.save(entity);
+
+        return mapToResponse(entity);
+    }
+
+
+    @Override
+    public {{name}}Response update{{name}}ById(
+            Long id,
+            {{name}}Request request
+    ) {
+
+        {{name}} entity = {{nameLower}}Repository
+                .findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "{{name}} Not Found"
+                        )
+                );
+
+        // TODO: update entity fields from request
+
+        entity = {{nameLower}}Repository.save(entity);
+
+        return mapToResponse(entity);
+    }
+
+
+    @Override
+    public boolean delete{{name}}ById(Long id, String reason) {
+        return {{nameLower}}Repository.softDeleteById(id, reason);
+    }
+
+
+    @Override
+    public {{name}}Response get{{name}}ById(Long id) {
+
+        {{name}} entity = {{nameLower}}Repository
+                .findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "{{name}} Not Found"
+                        )
+                );
+
+        return mapToResponse(entity);
+    }
+
+
+    @Override
+    public Page<{{name}}Response> get{{name}}Pagination(
+            BaseFilter filter
+    ) {
+        // TODO: create Pageable from BaseFilter
+        // TODO: add search/filter
+
+        throw new UnsupportedOperationException(
+                "Pagination not implemented yet"
+        );
+    }
+
+
+    private {{name}}Response mapToResponse({{name}} entity) {
+
+        // TODO: map entity to response
+
+        return null;
+    }
+}

@@ -1,0 +1,11 @@
+package {{package}}.dto.Request;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class {{name}}Request {
+
+    // Add request fields here
+}

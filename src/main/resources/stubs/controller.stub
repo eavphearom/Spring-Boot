@@ -1,0 +1,69 @@
+package {{package}}.controller;
+
+import {{package}}.common.filter.BaseFilter;
+import {{package}}.dto.Request.{{name}}Request;
+import {{package}}.dto.Response.{{name}}Response;
+import {{package}}.response.ApiResponse;
+import {{package}}.service.{{name}}Service;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/api/{{route}}")
+public class {{name}}Controller {
+
+    private final {{name}}Service {{nameLower}}Service;
+
+    @GetMapping("/pagination")
+    public ApiResponse<List<{{name}}Response>> get{{name}}Pagination(
+            BaseFilter filter
+    ) {
+        return ApiResponse.paginate(
+                {{nameLower}}Service.get{{name}}Pagination(filter),
+                filter.getPageNo()
+        );
+    }
+
+    @GetMapping("/{id}")
+    public ApiResponse<{{name}}Response> get{{name}}ById(
+            @PathVariable Long id
+    ) {
+        return ApiResponse.success(
+                {{nameLower}}Service.get{{name}}ById(id)
+        );
+    }
+
+    @PostMapping
+    public ApiResponse<{{name}}Response> create{{name}}(
+            @Valid @ModelAttribute {{name}}Request request
+    ) {
+        return ApiResponse.success(
+                {{nameLower}}Service.create{{name}}(request)
+        );
+    }
+
+    @PutMapping("/{id}")
+    public ApiResponse<{{name}}Response> update{{name}}ById(
+            @PathVariable Long id,
+            @Valid @ModelAttribute {{name}}Request request
+    ) {
+        return ApiResponse.success(
+                {{nameLower}}Service.update{{name}}ById(id, request)
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ApiResponse<Boolean> delete{{name}}ById(
+            @PathVariable Long id,
+            @RequestParam(required = false) String reason
+    ) {
+        return ApiResponse.success(
+                {{nameLower}}Service.delete{{name}}ById(id, reason)
+        );
+    }
+}
