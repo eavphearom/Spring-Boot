@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class TestProductResponse {
+public class CategoryResponse {
 
     private Long id;
 

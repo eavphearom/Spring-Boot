@@ -1,12 +1,12 @@
 package com.example.tutorial.service.impl;
 
-import com.example.tutorial.dto.Request.TestProductRequest;
-import com.example.tutorial.dto.Response.TestProductResponse;
-import com.example.tutorial.entity.TestProduct;
+import com.example.tutorial.dto.Request.CategoryRequest;
+import com.example.tutorial.dto.Response.CategoryResponse;
+import com.example.tutorial.entity.Category;
 import com.example.tutorial.exception.ResourceNotFoundException;
 import com.example.tutorial.common.filter.BaseFilter;
-import com.example.tutorial.repository.TestProductRepository;
-import com.example.tutorial.service.TestProductService;
+import com.example.tutorial.repository.CategoryRepository;
+import com.example.tutorial.service.CategoryService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,61 +14,61 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class TestProductServiceImpl implements TestProductService {
+public class CategoryServiceImpl implements CategoryService {
 
-    private final TestProductRepository testProductRepository;
+    private final CategoryRepository categoryRepository;
 
 
     @Override
-    public TestProductResponse createTestProduct(
-            TestProductRequest request
+    public CategoryResponse createCategory(
+            CategoryRequest request
     ) {
         // TODO: map request to entity
 
-        TestProduct entity = new TestProduct();
+        Category entity = new Category();
 
-        entity = testProductRepository.save(entity);
+        entity = categoryRepository.save(entity);
 
         return mapToResponse(entity);
     }
 
 
     @Override
-    public TestProductResponse updateTestProductById(
+    public CategoryResponse updateCategoryById(
             Long id,
-            TestProductRequest request
+            CategoryRequest request
     ) {
 
-        TestProduct entity = testProductRepository
+        Category entity = categoryRepository
                 .findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
-                                "TestProduct Not Found"
+                                "Category Not Found"
                         )
                 );
 
         // TODO: update entity fields from request
 
-        entity = testProductRepository.save(entity);
+        entity = categoryRepository.save(entity);
 
         return mapToResponse(entity);
     }
 
 
     @Override
-    public boolean deleteTestProductById(Long id, String reason) {
-        return testProductRepository.softDeleteById(id, reason);
+    public boolean deleteCategoryById(Long id, String reason) {
+        return categoryRepository.softDeleteById(id, reason);
     }
 
 
     @Override
-    public TestProductResponse getTestProductById(Long id) {
+    public CategoryResponse getCategoryById(Long id) {
 
-        TestProduct entity = testProductRepository
+        Category entity = categoryRepository
                 .findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
-                                "TestProduct Not Found"
+                                "Category Not Found"
                         )
                 );
 
@@ -77,7 +77,7 @@ public class TestProductServiceImpl implements TestProductService {
 
 
     @Override
-    public Page<TestProductResponse> getTestProductPagination(
+    public Page<CategoryResponse> getCategoryPagination(
             BaseFilter filter
     ) {
         // TODO: create Pageable from BaseFilter
@@ -89,7 +89,7 @@ public class TestProductServiceImpl implements TestProductService {
     }
 
 
-    private TestProductResponse mapToResponse(TestProduct entity) {
+    private CategoryResponse mapToResponse(Category entity) {
 
         // TODO: map entity to response
 

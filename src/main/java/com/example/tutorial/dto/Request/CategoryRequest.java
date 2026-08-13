@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TestProductRequest {
+public class CategoryRequest {
 
     // Add request fields here
 }
